@@ -74,7 +74,7 @@ int printMenu(){ // Prints the menu (HARDCODED)
 	for (i=0;i<9;i++){
 		printf("%d. %s \n", i, menu[i]);
 	}
-	printf("\n~~~~~~\n");
+	printf("\n~~~~\n");
 	printf("\nEnter your choice: ");
 	int choice=verifyInt();
 	while(choice<0 || choice>8){
@@ -241,7 +241,7 @@ void quoteStats(int totalItems){
 
 void purchaseStats(char itemName[][MAXINPUT], int totalItems){
 	for (k=0;k<totalItems;k++){
-		printf("\n~~~ %s ~~~\n", itemName[k]);
+		printf("\n~~ %s ~~\n", itemName[k]);
 		int mode=0, range=0;
 		float median=0, mean=0;
 	
@@ -367,7 +367,7 @@ void addData(char itemName[][MAXINPUT], int price[], int totalItems){ //FUNCTION
 	printList(itemName, price, totalItems);
 	
 	printf("Enter 0 to finish\n");
-	printf("\n~~~~~~~~\n");
+	printf("\n~~~~\n");
 	
 	int iNum=-1;
 	while(iNum!=0){
@@ -377,7 +377,7 @@ void addData(char itemName[][MAXINPUT], int price[], int totalItems){ //FUNCTION
 	customers[ind].total = findQuote(totalItems, price);
 	printf("\nTotal cost: %d", customers[ind]);
 	ind+=1;
-	printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+	printf("\n~~~~~~~~~~~~~\n\n");
 }
 
 void mostVisitedCustomer(){ // FUNCTION 2
@@ -427,7 +427,7 @@ void mostPurchasedItem(char itemName[][MAXINPUT], int totalItems){ //FUNCTION 3
 			maxi=i;
 		}
 	}
-	printf("\n~~ Most Purchased Item ~\n\nItem Name: %s \nQuantity: %d \n\n~~~~~~~~~~~\n", itemName[maxi], maxv);
+	printf("\n~~ Most Purchased Item \n\nItem Name: %s \nQuantity: %d \n\n~~~~\n", itemName[maxi], maxv);
 }
 
 void mpiAgeRange(char itemName[][MAXINPUT],int totalItems){ //FUNTION 4
@@ -435,7 +435,7 @@ void mpiAgeRange(char itemName[][MAXINPUT],int totalItems){ //FUNTION 4
 		printf("\nEnter data first \n");
 		return;
 	}
-	printf("\n\n~~~ Most Frequently Purchased Item in Given Age Range ~~~\n\n");
+	printf("\n\n~~ Most Frequently Purchased Item in Given Age Range ~~\n\n");
 	int maxv=0, maxi=0;
 	int maxage,minage;
 	printf("Enter lower limit for age: ");
@@ -467,7 +467,7 @@ void mpiAgeRange(char itemName[][MAXINPUT],int totalItems){ //FUNTION 4
 	else{
 		printf("No customers in the given age range.");
 	}
-	printf("\n\n~~~~~~~~~~~~~~~\n");
+	printf("\n\n~~~~~~~\n");
 }
 
 void itemAgeRange(char itemName[][MAXINPUT], int price[], int totalItems){ // FUNCTION 5
@@ -497,7 +497,7 @@ void itemAgeRange(char itemName[][MAXINPUT], int price[], int totalItems){ // FU
 	}
 	printf("\nMinimum age is: %d", minage);
 	printf("\nMaximum age is: %d", maxage);
-	printf("\n\n~~~~~~~~~~~~~\n");
+	printf("\n\n~~~~~\n");
 }
 
 void stats(char itemName[][MAXINPUT],int totalItems,int price[]){ // FUNCTION 6
@@ -506,9 +506,9 @@ void stats(char itemName[][MAXINPUT],int totalItems,int price[]){ // FUNCTION 6
 		return;
 	}
 	
-	printf("\n\n~~~ Statistics ~~~\n\n");
+	printf("\n\n~~ Statistics ~~\n\n");
 	
-	printf("~~~ MENU ~~~\n\n1. Age statistics\n2. Quote statistics\n3. Purchase statistics\n\n");
+	printf("~ MENU ~\n\n1. Age statistics\n2. Quote statistics\n3. Purchase statistics\n\n");
 	
 	printf("Enter your choice: ");
 	int sChoice = verifyInt();
@@ -532,7 +532,7 @@ void displayData(char itemName[][MAXINPUT], int totalItems){ //FUNCTION 7
 		printf("\nEnter data first \n");
 		return;
 	}
-	printf("\n\n~~~ DISPLAY DATA ~~~\n");
+	printf("\n\n~~ DISPLAY DATA ~~\n");
 	for(i=0;i<ind;i++){
 		printf("\nName: %s", customers[i].name);
 		printf("   |  Age: %d   |   Purchases: ", customers[i].age);
@@ -541,11 +541,11 @@ void displayData(char itemName[][MAXINPUT], int totalItems){ //FUNCTION 7
 		}
 		printf("  |  Total: %d", customers[i].total);
 	}
-	printf("\n\n~~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("\n\n~~~~~~~~~\n");
 }
 
 void addRandomDataHandler(char itemName[][MAXINPUT], int totalItems, int price[]){ //FUNCTION 8
-	printf("\n\n~~~ ADD RANDOM DATA ~~~\n");
+	printf("\n\n~~ ADD RANDOM DATA ~~\n");
 	printf("\nEnter the number of entries: ");
 	int num = verifyInt();
 	printf("\nEnter lower limit of age: ");
@@ -569,7 +569,7 @@ void addRandomDataHandler(char itemName[][MAXINPUT], int totalItems, int price[]
 
 /* ------------------------------------------------------------ */
 int main(){
-	printf("\n~~~~~~~~~~ Customer Interest Analysis ~~~~~~~~~~\n");
+	printf("\n~~~~ Customer Interest Analysis ~~~~\n");
 	
 	char shopName[MAXINPUT];
 	printf("\nEnter the shop name: ");
