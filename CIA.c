@@ -7,7 +7,9 @@
 #define MAXINPUT 100
 
 
-int i,j,k,ind=0; //Iter variables
+int i,j,k; //Iter variables
+
+int ind=0; //Global index
 
 /* --------------------------------------------------------------------------- */
 // Structures
@@ -19,17 +21,20 @@ struct Customer{
 	int total;
 };
 
-struct Customer * customers; //TODO: free it
+struct Customer * customers;
 
 void createCustomers(){
 	customers = malloc((ind+1) * sizeof(customers));
 	if (customers==NULL){
-		printf("Malloc for customers failed");
+		printf("\nMalloc for customers failed\n");
 	}
 }
 
 void growCustomers(){
 	customers = (struct Customer *) realloc(customers, (ind+1)*sizeof(struct Customer));
+	if (customers==NULL){
+		printf("\nRealloc for customers failed\n");
+	}
 }
 
 /* --------------------------------------------------------------------------- */
@@ -146,7 +151,7 @@ void ageStats(int totalItems){
 	mean=mean/ind;
 	
     if (ind%2==0){
-    	median = (ageArray[ind/2]+ageArray[(ind/2)-1])/2;
+    	median = (ageArray[ind/2]+ageArray[(ind/2)-1])/2.0;
 	}
 	else{
 		median = ageArray[ind/2];
@@ -208,7 +213,7 @@ void quoteStats(int totalItems){
 	mean=mean/ind;
 	
     if (ind%2==0){
-    	median = (totalArray[ind/2]+totalArray[(ind/2)-1])/2;
+    	median = (totalArray[ind/2]+totalArray[(ind/2)-1])/2.0;
 	}
 	else{
 		median = totalArray[ind/2];
@@ -271,7 +276,7 @@ void purchaseStats(char itemName[][MAXINPUT], int totalItems){
 		mean=mean/ind;
 		
     	if (ind%2==0){
-    		median = (itemArray[ind/2]+itemArray[(ind/2)-1])/2;
+    		median = (itemArray[ind/2]+itemArray[(ind/2)-1])/2.0;
 		}
 		else{
 			median = itemArray[ind/2];
@@ -309,13 +314,13 @@ int randBtwn(int lower, int upper){
 }
 
 void addRandom(int ageLow, int ageUp, int pUp, int totalItems, int price[]){
-	if (ind<=0){
+	if (ind==0){
 		createCustomers();
 	}
 	else{
 		growCustomers();
 	}
-	int x =  randBtwn(100,1000);
+	int x =  randBtwn(10,100);
 	sprintf(customers[ind].name,"random-%d",x);
 	customers[ind].age = randBtwn(ageLow, ageUp);
 	
@@ -375,7 +380,7 @@ void addData(char itemName[][MAXINPUT], int price[], int totalItems){ //FUNCTION
 		iNum = verifyAndUpdatePurchase(totalItems);
 	}
 	customers[ind].total = findQuote(totalItems, price);
-	printf("\nTotal cost: %d", customers[ind]);
+	printf("\nTotal cost: %d", customers[ind].total);
 	ind+=1;
 	printf("\n~~~~~~~~~~~~~\n\n");
 }
