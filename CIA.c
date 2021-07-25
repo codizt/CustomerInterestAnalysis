@@ -532,21 +532,61 @@ void stats(char itemName[][MAXINPUT],int totalItems,int price[]){ // FUNCTION 6
 	}
 }
 
-void displayData(char itemName[][MAXINPUT], int totalItems){ //FUNCTION 7
+void displayData(char shopName[],char itemName[][MAXINPUT], int totalItems, int price[]){ //FUNCTION 7
 	if(ind==0){
 		printf("\nEnter data first \n");
 		return;
 	}
-	printf("\n\n~~ DISPLAY DATA ~~\n");
-	for(i=0;i<ind;i++){
-		printf("\nName: %s", customers[i].name);
-		printf("   |  Age: %d   |   Purchases: ", customers[i].age);
-		for(j=0;j<totalItems;j++){
-			printf("%d ", customers[i].purchase[j]);
-		}
-		printf("  |  Total: %d", customers[i].total);
+	
+	printf("\n1. Display in terminal\n2. Output to file\n\nEnter your choice: ");
+	int choice=verifyInt();
+	while(choice<1 || choice>2){
+		printf("Enter valid choice: ");
+		choice = verifyInt();
 	}
-	printf("\n\n~~~~~~~~~\n");
+	
+	if(choice==1){
+		printf("~~~~~~~~~~ DISPLAY DATA ~~~~~~~~~~\n\n");
+		printf("Shop Name: %s\n", shopName);
+		printf("\nAvailable items and price: \n");
+		for (i=0;i<totalItems;i++){
+			printf("\n%d. %s - %d", i+1, itemName[i], price[i]);
+		}
+		printf("\n\n-------------------------------------------------------------------\n");
+		for(i=0;i<ind;i++){
+			printf("\n%d. Name: %s", i+1, customers[i].name);
+			printf("   |  Age: %d   |   Purchases: ", customers[i].age);
+			for(j=0;j<totalItems;j++){
+				printf("%d ", customers[i].purchase[j]);
+			}
+			printf("  |  Total: %d", customers[i].total);
+		}
+		printf("\n\n~~~~~~~~~\n");
+	}
+	else{
+		FILE *f = fopen("CIA_data.txt", "w");
+		if (f == NULL){
+    		printf("Error opening file!\n");
+    		return;
+		}
+		fprintf(f,"~~~~~~~~~~ DISPLAY DATA ~~~~~~~~~~\n\n");
+		fprintf(f, "Shop Name: %s\n", shopName);
+		fprintf(f, "\nAvailable items and price: \n");
+		for (i=0;i<totalItems;i++){
+			fprintf(f,"\n%d. %s - %d", i+1, itemName[i], price[i]);
+		}
+		fprintf(f,"\n\n-------------------------------------------------------------------\n");
+		for(i=0;i<ind;i++){
+			fprintf(f,"\n%d. Name: %s", i+1, customers[i].name);
+			fprintf(f,"   |  Age: %d   |   Purchases: ", customers[i].age);
+			for(j=0;j<totalItems;j++){
+				fprintf(f, "%d ", customers[i].purchase[j]);
+			}
+			fprintf(f, "  |  Total: %d", customers[i].total);
+		}
+		fprintf(f,"\n\n~~~~~~~~~\n");
+		fclose(f);
+	}
 }
 
 void addRandomDataHandler(char itemName[][MAXINPUT], int totalItems, int price[]){ //FUNCTION 8
@@ -619,7 +659,7 @@ int main(){
 			stats(itemName, totalItems, price);
 		}
 		if (choice==7){
-			displayData(itemName, totalItems);
+			displayData(shopName, itemName, totalItems, price);
 		}
 		if (choice==8){
 			addRandomDataHandler(itemName, totalItems, price);
