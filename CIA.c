@@ -390,7 +390,7 @@ void mostVisitedCustomer(){ // FUNCTION 2
 		printf("\nEnter data first \n");
 		return;
 	}
-	char cName[ind][MAXINPUT], freq[ind];
+	char cName[ind][MAXINPUT];
 	int max=0,maxi=0;
 	for (i=0;i<ind;i++){
 		strcpy(cName[i],customers[i].name);
@@ -538,9 +538,9 @@ void displayData(char shopName[],char itemName[][MAXINPUT], int totalItems, int 
 		return;
 	}
 	
-	printf("\n1. Display in terminal\n2. Output to file\n\nEnter your choice: ");
+	printf("\n1. Display in terminal\n2. Output to csv file\n3. Output to txt file\n\nEnter your choice: ");
 	int choice=verifyInt();
-	while(choice<1 || choice>2){
+	while(choice<1 || choice>3){
 		printf("Enter valid choice: ");
 		choice = verifyInt();
 	}
@@ -563,19 +563,45 @@ void displayData(char shopName[],char itemName[][MAXINPUT], int totalItems, int 
 		}
 		printf("\n\n~~~~~~~~~\n");
 	}
+	else if(choice==2){
+		char csvFileName[MAXINPUT];
+		sprintf(csvFileName,"%s.csv",shopName);
+		FILE *fc = fopen(csvFileName, "w");
+		if (fc == NULL){
+    		printf("Error opening file!\n");
+    		return;
+		}
+		// CSV HEAD
+		fprintf(fc,"Index,Name,Age,Total");
+		for(i=0;i<totalItems;i++){
+			fprintf(fc,",%s", itemName[i]);
+		}
+		//CSV BODY
+		for(i=0;i<ind;i++){
+			fprintf(fc,"\n%d,%s,%d,%d", i+1,customers[i].name, customers[i].age,customers[i].total);
+			for(j=0;j<totalItems;j++){
+				fprintf(fc,",%d",customers[i].purchase[j]);
+			}
+		}
+		fclose(fc);
+		printf("\nFile created successfully!\n");
+	}
 	else{
 		FILE *f = fopen("CIA_data.txt", "w");
 		if (f == NULL){
     		printf("Error opening file!\n");
     		return;
 		}
-		fprintf(f,"~~~~~~~~~~ DISPLAY DATA ~~~~~~~~~~\n\n");
+		fprintf(f,"~~~~~~~~~~ CUSTOMER INTEREST ANALYSIS REPORT ~~~~~~~~~~\n\n");
 		fprintf(f, "Shop Name: %s\n", shopName);
 		fprintf(f, "\nAvailable items and price: \n");
 		for (i=0;i<totalItems;i++){
 			fprintf(f,"\n%d. %s - %d", i+1, itemName[i], price[i]);
 		}
-		fprintf(f,"\n\n-------------------------------------------------------------------\n");
+		time_t t;
+    	time(&t);
+    	fprintf(f, "\n\nDate & Time: %s",ctime(&t));
+		fprintf(f,"\n\n=======================================================================\n");
 		for(i=0;i<ind;i++){
 			fprintf(f,"\n%d. Name: %s", i+1, customers[i].name);
 			fprintf(f,"   |  Age: %d   |   Purchases: ", customers[i].age);
@@ -584,8 +610,9 @@ void displayData(char shopName[],char itemName[][MAXINPUT], int totalItems, int 
 			}
 			fprintf(f, "  |  Total: %d", customers[i].total);
 		}
-		fprintf(f,"\n\n~~~~~~~~~\n");
+		fprintf(f,"\n=======================================================================\n");
 		fclose(f);
+		printf("\nFile created successfully!\n");
 	}
 }
 
