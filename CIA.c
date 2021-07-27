@@ -688,7 +688,8 @@ int main(){
 			
 			char iname[MAXINPUT];
 			int p;
-			totalItems=-1; //To ignore the head
+			totalItems=0; //To ignore the head
+			fscanf(fi, "%[^,],%s\n", iname); //To ignore head
 			while(fscanf(fi, "%[^,],%d\n", iname, &p)!=EOF){
 				if(totalItems>=0){
 					strcpy(itemName[totalItems],iname);
