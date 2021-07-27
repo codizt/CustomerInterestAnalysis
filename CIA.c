@@ -647,23 +647,58 @@ int main(){
 	printf("\nEnter the shop name: ");
 	scanf("%s", shopName);
 	
-	printf("\nEnter the total number of items in shop: ");
-	int totalItems=verifyInt();
+	int totalItems;
 	
-	int price[totalItems];
-	char itemName[totalItems][MAXINPUT];
+	int price[MAXINPUT];
+	char itemName[MAXINPUT][MAXINPUT];
 	
-	for (i=0;i<totalItems;i++){
-		strcpy(itemName[i],"");
+	int gotItems=0;
+	while(!gotItems){
+		printf("\nITEM DETAILS\n\n1. Enter from terminal\n2. Enter through spreadsheet\n\nEnter your choice: ");
+		int mchoice=verifyInt();
+		while(mchoice<1 || mchoice>2){
+			printf("Enter valid choice: ");
+			mchoice=verifyInt();
+		}
+		if(mchoice==1){
+			printf("\nEnter the total number of items in shop: ");
+			totalItems=verifyInt();
+			for (i=0;i<totalItems;i++){
+			strcpy(itemName[i],"");
+			}
+	
+			for(k=0;k<totalItems;k++){
+				printf("\nEnter name of item %d : ", k+1);
+				scanf("%s",itemName[k]);
+				printf("Enter price of item %d : ", k+1);
+				price[k]=verifyInt();
+			}
+			gotItems=1;
+		}
+		else{
+			FILE *fi;
+			fi = fopen("CIA_items.csv", "r");
+			
+			int lines=0;
+			
+			if(fi==NULL){
+				printf("\nCan't open file. Check for CIA_items.csv\n");
+				continue;
+			}
+			
+			char iname[MAXINPUT];
+			int p;
+			while(fscanf(fi, "%[^,],%d\n", iname, &p)!=EOF){
+				strcpy(itemName[totalItems],iname);
+				price[totalItems]=p;
+				totalItems+=1;
+			}
+			
+			fclose(fi);
+			gotItems=1;
+			printf("\n%d Items added successfully.\n", totalItems);
+		}	
 	}
-	
-	for(k=0;k<totalItems;k++){
-		printf("\nEnter name of item %d : ", k+1);
-		scanf("%s",itemName[k]);
-		printf("Enter price of item %d : ", k+1);
-		price[k]=verifyInt();
-	}
-	
 	
 	int choice=printMenu();
 	while(choice!=0){
