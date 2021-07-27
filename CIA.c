@@ -688,9 +688,12 @@ int main(){
 			
 			char iname[MAXINPUT];
 			int p;
+			totalItems=-1; //To ignore the head
 			while(fscanf(fi, "%[^,],%d\n", iname, &p)!=EOF){
-				strcpy(itemName[totalItems],iname);
-				price[totalItems]=p;
+				if(totalItems>=0){
+					strcpy(itemName[totalItems],iname);
+					price[totalItems]=p;
+				}
 				totalItems+=1;
 			}
 			
